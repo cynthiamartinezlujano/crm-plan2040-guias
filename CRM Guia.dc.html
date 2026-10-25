@@ -467,7 +467,7 @@
           <button onClick="{{ flt.open }}" style="{{ flt.btnSt }}">{{ flt.btnLabel }}</button>
           <sc-for list="{{ flt.vistasQuick }}" as="vq" hint-placeholder-count="1"><button onClick="{{ vq.apply }}" title="{{ vq.hint }}" style="{{ vq.st }}">{{ vq.t }}</button></sc-for>
           <div data-r="hide-mobile" style="flex:1;"></div>
-          <input data-r="search" value="{{ q }}" onChange="{{ onQ }}" placeholder="Buscar por nombre o ID-COMUNIDAD…" style="border:1px solid rgba(20,20,20,.14);border-radius:999px;padding:8px 14px;font-size:12.5px;width:260px;background:#fff;">
+          <input data-r="search" value="{{ q }}" onChange="{{ onQ }}" placeholder="Buscar por nombre o ID…" style="border:1px solid rgba(20,20,20,.14);border-radius:999px;padding:8px 14px;font-size:12.5px;width:260px;background:#fff;">
         </div>
         <sc-if value="{{ flt.hasActive }}" hint-placeholder-val="{{ false }}">
           <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;align-items:center;">
@@ -7714,7 +7714,7 @@ class Component extends DCLogic {
           if (!ultimoA) { setPasoA(pasoA + 1, pasoA + 1 === pasoPorPilar.pilares ? 'Educación' : null); return; }
           if (!canSaveA) return;
           const com = String(AV.comunidad || '').indexOf('CI') === 0 ? 'CI' : 'CC';
-          const id = com + '-9' + String(S.altas.personas.length + 1).padStart(2, '0');
+          const id = String(100000 + S.altas.personas.length + 1);
           const j = a => (a && a.length ? a.join(', ') : null);
           const nn = v => v || null;
           const sac = k => { const st = AV[k + '_st']; return st === 'Sí' ? 'Si' : st === 'No' ? 'No' : null; };
@@ -7888,7 +7888,7 @@ class Component extends DCLogic {
           const com = String(AV.famComunidad || '').indexOf('CI') === 0 ? 'CI' : 'CC';
           const fid = 'fam_alta_' + Date.now();
           const baseSeq = S.altas.personas.length;
-          const ids = A.miembros.map((m, i) => com + '-9' + String(baseSeq + i + 1).padStart(2, '0'));
+          const ids = A.miembros.map((m, i) => String(100000 + baseSeq + i + 1));
           const ubic = [[AV.famCalle, AV.famNumExt, AV.famNumInt ? 'Int. ' + AV.famNumInt : ''].filter(Boolean).join(' '), AV.famColonia, ADU ? ADU.municipioDe(com) : '', AV.famCp].filter(Boolean).join(', ') || null;
           const famObj = { familyId: fid, familia: famName, ids_integrantes: ids };
           const recs = A.miembros.map((m, i) => {
