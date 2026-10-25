@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<template id="__bundler_thumbnail"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#FDB813"/><text x="50" y="62" font-family="Sora,sans-serif" font-size="34" font-weight="800" text-anchor="middle" fill="#141414">G</text></svg></template>
+<x-dc>
+<helmet>
+<title>Plan 20·40 · Inicio de sesión</title>
+<link rel="stylesheet" href="_ds/plan-20-40-sistema-de-dise-o-apr-08da0c0a-c85c-419c-a45f-a79962e0af47/tokens/fonts.css">
+<link rel="stylesheet" href="_ds/plan-20-40-sistema-de-dise-o-apr-08da0c0a-c85c-419c-a45f-a79962e0af47/tokens/colors.css">
+<link rel="stylesheet" href="_ds/plan-20-40-sistema-de-dise-o-apr-08da0c0a-c85c-419c-a45f-a79962e0af47/tokens/base.css">
+<script src="_ds/plan-20-40-sistema-de-dise-o-apr-08da0c0a-c85c-419c-a45f-a79962e0af47/_ds_bundle.js"></script>
+<style>
+@font-face { font-family: 'Sora'; src: url('assets/fonts/Sora-Variable.ttf') format('truetype'); font-weight: 100 900; }
+html, body { margin: 0; height: 100%; background: #F7F5F0; font-family: 'Sora', sans-serif; color: #141414; }
+a { color: #E81957; } a:hover { color: #C1124A; }
+input::placeholder { color: rgba(20,20,20,.38); }
+@media (max-width: 860px) { [data-r="foto"] { display: none !important; } [data-r="login-wrap"] { grid-template-columns: 1fr !important; } [data-r="mob-banner"] { display: flex !important; } }
+</style>
+</helmet>
+<div data-r="login-wrap" data-screen-label="Inicio de sesión" style="min-height:100vh;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);">
+
+  <div data-r="foto" style="position:relative;overflow:hidden;background:#E81957;min-height:100vh;">
+    <img src="assets/fotos/ninas-campo.jpg" alt="Dos niñas jugando bajo un árbol" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 70%;">
+        <div style="position:absolute;left:28px;right:28px;bottom:28px;background:#E81957;color:#fff;border-radius:24px;padding:26px 28px 24px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px;align-items:end;overflow:hidden;">
+      <div style="min-width:0;">
+        <div style="font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;opacity:.85;">{{ frase.eyebrow }}</div>
+        <div style="font-size:30px;font-weight:800;letter-spacing:-0.02em;line-height:1.1;margin-top:8px;text-wrap:balance;">{{ frase.titulo }}</div>
+        <div style="font-size:14px;line-height:1.5;margin-top:10px;opacity:.95;text-wrap:pretty;">{{ frase.texto }}</div>
+        <div style="display:flex;gap:6px;margin-top:16px;">
+          <sc-for list="{{ dots }}" as="d" hint-placeholder-count="4"><button onClick="{{ d.sel }}" aria-label="{{ d.l }}" style="{{ d.st }}"></button></sc-for>
+        </div>
+      </div>
+      <img src="assets/ilu/hand-heart.png" alt="" style="width:72px;height:72px;object-fit:contain;margin:0 -4px -4px 0;">
+    </div>
+  </div>
+
+  <div style="display:flex;flex-direction:column;justify-content:center;align-items:center;padding:40px 28px;position:relative;overflow:hidden;">
+    <div data-r="mob-banner" style="display:none;width:100%;max-width:400px;background:#E81957;color:#fff;border-radius:20px;padding:18px 20px;margin-bottom:26px;align-items:center;gap:14px;">
+      <img src="assets/ilu/hand-heart.png" alt="" style="width:58px;height:58px;object-fit:contain;flex:none;">
+      <div style="font-size:15px;font-weight:800;line-height:1.25;">{{ frase.titulo }}</div>
+    </div>
+
+    <div style="width:100%;max-width:400px;display:flex;flex-direction:column;gap:22px;">
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <img src="assets/logo-color.svg" alt="Plan 20·40" style="width:200px;height:auto;margin-bottom:10px;">
+        <div style="font-size:30px;font-weight:800;letter-spacing:-0.02em;line-height:1.1;margin-top:6px;">{{ saludo }}</div>
+        <div style="font-size:14px;color:rgba(20,20,20,.6);line-height:1.5;text-wrap:pretty;">Entra al CRM del Plan 20·40 para seguir acompañando a tus familias.</div>
+      </div>
+
+      <div style="background:#fff;border-radius:18px;padding:12px 14px;display:flex;flex-direction:column;gap:8px;box-shadow:0 1px 3px rgba(20,20,20,.06);">
+        <div style="font-size:12px;font-weight:700;color:rgba(20,20,20,.7);">¿Cómo llegas hoy?</div>
+        <div style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;">
+          <sc-for list="{{ emos }}" as="em" hint-placeholder-count="5">
+            <button onClick="{{ em.sel }}" title="{{ em.l }}" style="{{ em.st }}"><span role="img" aria-label="{{ em.l }}" style="{{ em.imgSt }}"></span><span style="font-size:10.5px;font-weight:700;color:rgba(20,20,20,.65);">{{ em.l }}</span></button>
+          </sc-for>
+        </div>
+        <sc-if value="{{ hasEmoMsg }}" hint-placeholder-val="{{ false }}"><div style="font-size:12.5px;line-height:1.45;color:#C1124A;font-weight:600;text-wrap:pretty;">{{ emoMsg }}</div></sc-if>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <label style="display:flex;flex-direction:column;gap:6px;">
+          <span style="font-size:12px;font-weight:700;color:rgba(20,20,20,.7);">Usuario o correo</span>
+          <input value="{{ usuario }}" onChange="{{ onUsuario }}" placeholder="Ej. laura@plan-2040.org" autocomplete="username" style="border:1.5px solid rgba(20,20,20,.14);border-radius:12px;padding:13px 14px;font-size:14px;font-family:inherit;background:#fff;outline:none;" style-focus="border-color:#E81957;box-shadow:0 0 0 3px rgba(232,25,87,.15);">
+        </label>
+        <label style="display:flex;flex-direction:column;gap:6px;">
+          <span style="display:flex;justify-content:space-between;align-items:baseline;"><span style="font-size:12px;font-weight:700;color:rgba(20,20,20,.7);">Contraseña</span><a href="#" onClick="{{ olvido }}" style="font-size:11.5px;font-weight:700;text-decoration:none;">¿La olvidaste?</a></span>
+          <span style="position:relative;display:flex;">
+            <input type="{{ passType }}" value="{{ pass }}" onChange="{{ onPass }}" placeholder="••••••••" autocomplete="current-password" style="flex:1;min-width:0;border:1.5px solid rgba(20,20,20,.14);border-radius:12px;padding:13px 70px 13px 14px;font-size:14px;font-family:inherit;background:#fff;outline:none;" style-focus="border-color:#E81957;box-shadow:0 0 0 3px rgba(232,25,87,.15);">
+            <button onClick="{{ togglePass }}" type="button" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);border:none;background:rgba(20,20,20,.06);border-radius:999px;padding:6px 10px;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;color:rgba(20,20,20,.65);">{{ passLbl }}</button>
+          </span>
+        </label>
+        <label style="display:flex;align-items:center;gap:8px;font-size:12.5px;color:rgba(20,20,20,.7);cursor:pointer;">
+          <input type="checkbox" checked="{{ recordar }}" onChange="{{ onRecordar }}" style="width:16px;height:16px;accent-color:#E81957;margin:0;">
+          Recordarme en este dispositivo
+        </label>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <button onClick="{{ entrar }}" style="border:none;cursor:pointer;background:#E81957;color:#fff;font-weight:800;font-size:15px;padding:15px 20px;border-radius:999px;font-family:inherit;transition:all .18s;" style-hover="background:#C1124A;box-shadow:0 8px 24px rgba(232,25,87,.35);">{{ entrarLbl }}</button>
+        <div style="display:flex;align-items:center;gap:10px;background:#FFF6DE;border-radius:14px;padding:11px 14px;">
+          <img src="assets/spot/stars.png" alt="" style="width:28px;height:28px;object-fit:contain;flex:none;">
+          <div style="font-size:12px;line-height:1.45;color:#5C4400;text-wrap:pretty;"><b>Por ahora no necesitas contraseña.</b> Toca «Entrar» y pasas directo al CRM.</div>
+        </div>
+      </div>
+
+      <div style="font-size:11px;color:rgba(20,20,20,.45);text-align:center;line-height:1.5;">Plan 20·40 · Cuatro Ciénegas e Independencia<br>Tus datos y los de las familias se cuidan conforme a nuestro aviso de privacidad.</div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { usuario: '', pass: '', ver: false, recordar: true, i: 0, yendo: false, emo: '' };
+  EMOS = [
+    ['alegre', 'Alegre', '¡Qué bien! Esa alegría se contagia en cada visita.'],
+    ['emocionado', 'Con ganas', 'Con esa energía, hoy va a ser un gran día de acompañamiento.'],
+    ['en-calma', 'En calma', 'Qué bonito empezar con calma. Paso a paso.'],
+    ['cansado', 'Cansada/o', 'Gracias por estar aquí aun con cansancio. Tómate tu tiempo.'],
+    ['preocupado', 'Preocupada/o', 'No estás sola/o: somos un equipo. Si lo necesitas, platícalo con tu coordinación.']
+  ];
+  FRASES = [
+    { eyebrow: 'Aquí empieza otro día de acompañamiento', titulo: 'Cada visita siembra un sueño', texto: 'Lo que haces hoy acompaña a una familia entera en su camino hacia 2040.' },
+    { eyebrow: 'Gracias por estar', titulo: 'Juntos impulsamos las oportunidades de vida', texto: 'Detrás de cada registro hay una niña, un niño y una familia que confía en nosotros.' },
+    { eyebrow: 'Soñar en grande', titulo: 'Nuevas generaciones, nuevas historias', texto: 'Tu acompañamiento ayuda a que cada pequeño recorra el camino de su vocación plena.' },
+    { eyebrow: 'Paso a paso', titulo: 'Lo pequeño de hoy es lo grande de mañana', texto: 'Una plática, una vacuna, un tema de la carpeta: todo suma al plan de vida.' }
+  ];
+  componentDidMount() { this._t = setInterval(() => this.setState(s => ({ i: (s.i + 1) % this.FRASES.length })), 7000); }
+  componentWillUnmount() { clearInterval(this._t); }
+  renderVals() {
+    const S = this.state, hr = new Date().getHours();
+    return {
+      emos: this.EMOS.map(([k, l]) => { const on = S.emo === k; return { l, src: 'assets/emo/' + k + '.png', sel: () => this.setState({ emo: on ? '' : k }),
+        st: { display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2, border: '2px solid ' + (on ? '#E81957' : 'transparent'), background: on ? 'rgba(232,25,87,.07)' : 'transparent', borderRadius: 14, padding: '6px 2px', cursor: 'pointer', fontFamily: 'inherit', transition: 'all .18s' },
+        imgSt: { display: 'block', width: 44, height: 44, background: 'center / contain no-repeat url(assets/emo/' + k + '.png)', transform: on ? 'scale(1.12)' : 'none', transition: 'transform .2s' } }; }),
+      hasEmoMsg: !!S.emo, emoMsg: (this.EMOS.find(e => e[0] === S.emo) || [])[2] || '',
+      saludo: hr < 12 ? '¡Buenos días!' : hr < 19 ? '¡Buenas tardes!' : '¡Buenas noches!',
+      frase: this.FRASES[S.i],
+      dots: this.FRASES.map((_, k) => ({ l: 'Mensaje ' + (k + 1), sel: () => this.setState({ i: k }), st: { width: k === S.i ? 22 : 8, height: 8, borderRadius: 999, border: 'none', padding: 0, cursor: 'pointer', background: k === S.i ? '#fff' : 'rgba(255,255,255,.45)', transition: 'all .25s' } })),
+      usuario: S.usuario, pass: S.pass, recordar: S.recordar,
+      onUsuario: e => this.setState({ usuario: e.target.value }),
+      onPass: e => this.setState({ pass: e.target.value }),
+      onRecordar: e => this.setState({ recordar: e.target.checked }),
+      passType: S.ver ? 'text' : 'password', passLbl: S.ver ? 'Ocultar' : 'Ver',
+      togglePass: e => { e.preventDefault(); this.setState({ ver: !S.ver }); },
+      olvido: e => { e.preventDefault(); alert('Pide a Administración que restablezca tu contraseña.'); },
+      entrarLbl: S.yendo ? 'Entrando…' : 'Entrar',
+      entrar: () => { this.setState({ yendo: true }); setTimeout(() => { window.location.href = 'CRM Guia.dc.html'; }, 450); }
+    };
+  }
+}
+</script>
+</body>
+</html>
