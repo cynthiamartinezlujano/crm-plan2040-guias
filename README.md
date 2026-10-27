@@ -1,39 +1,45 @@
 # Plan 20·40 · CRM — Versión de prueba: rol **Guía**
 
-Paquete para probar el CRM tal como lo verá una **guía**. El usuario está fijo en «Guía» (no hay selector de usuario).
+Paquete para probar el CRM tal como lo verá una **guía** (Guía Cecilia en la muestra). Es la misma versión que `CRM Plan 2040.dc.html`; solo cambia el rol con el que abre.
 
 ## Cómo abrirlo
 Los archivos cargan datos con `fetch`, así que deben servirse desde un servidor local (no doble clic):
 
 ```bash
-cd crm-plan2040-guias
+cd export_guia
 python3 -m http.server 8000
 # abrir http://localhost:8000/Inicio%20Guia.dc.html
 ```
 
-1. **Inicio Guia.dc.html** — pantalla de inicio de sesión. Por ahora no valida usuario ni contraseña: «Entrar» pasa directo al CRM.
-2. **CRM Guia.dc.html** — el CRM con permisos de guía. «Cerrar sesión» regresa al inicio de sesión.
+1. **Inicio Guia.dc.html** — inicio de sesión (aún no valida usuario ni contraseña).
+2. **CRM Guia.dc.html** — el CRM con permisos de guía. «Cerrar sesión» regresa al inicio.
 
-## Qué ve y qué puede hacer la guía
-- **Inicio**: saludo, frase del día, tarjetas del mes (familias, niños/as P2040, embarazadas con % de visita; sus acompañamientos del mes) y visitas del mes. Sin filtros de comunidad/guía/pilar.
-- **Personas / Familias**: solo las suyas. En «Otras familias» ve únicamente el nombre de la familia (sin integrantes).
-- **Acompañamiento**: por mes (flechas ‹ ›), lista o calendario, solo de sus personas. Sin sección Pilares.
-- **Registrar**: visitas formativas (5 pasos), seguimientos y **solicitud de caso** (la guía solo llega a la solicitud; la valoración y atención las hace Trabajo social).
-- **Alta de personas**: Datos · Hogar · Ubicación · Pilares (5.1–5.5) · Acompañamiento (con aviso de privacidad, hoja de registro y sueño para P2040). Al terminar: pantalla «¡Listo!» con ID y opción de registrar su primera visita.
-- **Nutrición**: la guía solo registra tamizaje.
-- **Notificaciones**: informativas (se marcan como leídas) y de acción (se quitan al resolverse); vista lateral o pantalla completa.
-- **Mi perfil**: foto (editable), datos, permisos, cambiar contraseña (próximamente) y cerrar sesión.
+El mapa (pin del hogar y «Mapa real» del plan) y el llenado automático de la dirección necesitan internet.
+
+## Qué hay en esta versión
+- **Inicio**: mensaje de ánimo con avance del mes por hogar y acceso a su plan; visitas del mes en pestañas (les falta visita · visitados · descansan) con filtro niños/embarazadas.
+- **Mi plan**
+  - *Plan del día*: hogares por orden de ruta desde la oficina, tarjeta por hogar (compromiso anterior, carpetas que tocan, alertas, prioridad), vehículo compartido, ruta óptima por cercanía y mapa.
+  - *Planeación del mes*: propuesta automática por zona y prioridad, proyección «¿alcanzas?» con el ritmo de visitas por día, calendario por semana (color por semana igual que en el mapa), arrastrar hogares entre días o tocar para mover, «Sin lugar en tu planeación», meses anteriores con lo real y meses siguientes para planear. Las visitas agendadas al registrar una visita quedan fijas salvo que la guía las mueva.
+- **Periodicidad**: mensual si hay embarazo o un niño P2040 menor de 7 años; bimestral si el menor tiene 7+ (grupo A meses impares / B pares). Si en su mes no se logró la visita, al siguiente le toca. Los que descansan no cuentan como «sin visita».
+- **Hogares y relaciones**: el hogar (quienes viven bajo el mismo techo, solo P2040 y F2040) es la unidad de visita. Las relaciones son persona a persona y en ambos sentidos (medio hermano, padrastro, abuela/nieta…), con «Vive aquí» para formar el hogar. Los perfiles C2040 y R2040 son solo relacionados.
+- **Ficha del hogar**: encabezado visual, ubicación con **pin en el mapa** (calles/satélite, dirección que se llena sola) o dirección escrita, y pestañas *Guía de visita* (estado, pendientes, tips), *Indicadores*, *Integrantes* y *Acompañamiento*.
+- **Ficha de persona**: encabezado limpio, **sus 10 indicadores** y pendientes; información y documentos según la edad («Se abre pronto»).
+- **10 indicadores**: acompañamiento último mes, formación, sueño, registro civil, escolaridad, seguro médico, nutrición, vacunas, sacramentos según edad y consagración en 2 años.
+- **Registro**: persona, mamá embarazada y hogar completo (sin apellidos obligatorios; tipo de familia sugerido por las relaciones).
 
 ## Datos de prueba
-- `uploads/crm_muestra.json`: muestra con datos **ficticios** (nombres, IDs, CURP, teléfonos, domicilios y textos libres reemplazados) basada en la estructura del corte de junio 2026. Al cargar, el CRM **simula acompañamientos** desde ese corte hasta hoy (marcados `simulado: true`) para poder probar el mes actual.
-- Lo que se captura durante la prueba (altas, visitas, fotos, notificaciones leídas) se guarda **solo en el navegador** (localStorage).
+- `data/crm_ficticio.json`: muestra anonimizada hasta junio 2026 (nombres, IDs, hogares y fechas remapeados).
+- `data/muestra-guias.js`: al abrir, completa ~70 hogares por guía con relaciones, ubicación aproximada por colonia e historial de visitas que respeta la periodicidad; luego se simulan acompañamientos hasta hoy.
+- Lo capturado durante la prueba (altas, visitas, plan, pines, relaciones) se guarda **solo en el navegador** (localStorage).
 
 ## Archivos
 - `Inicio Guia.dc.html`, `CRM Guia.dc.html` — páginas.
 - `support.js` — runtime de los componentes.
-- `admin-data.js` — catálogos, roles, usuarios y notificaciones por rol.
-- `assets/` — logo, fotos, ilustraciones, emociones, iconos de pilar, tipografía Sora.
+- `admin-data.js` — catálogos, roles, usuarios y notificaciones.
+- `data/` — datos y generador de la muestra.
+- `assets/` — logo, fotos, ilustraciones, emociones, iconos, tipografía Sora.
 - `_ds/…` — tokens y estilos del sistema de diseño Plan 20·40.
 
 ## Nota para desarrollo
-Son prototipos de diseño en HTML: muestran el comportamiento y la apariencia esperados. Para producción hay que conectar autenticación real, base de datos y permisos del lado del servidor.
+Son prototipos de diseño en HTML. Para producción hay que conectar autenticación, base de datos, permisos del servidor, geocodificación con un proveedor contratado y un servicio de mapas con licencia de uso.
