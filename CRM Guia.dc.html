@@ -539,7 +539,7 @@
           </div>
         </div>
         <div data-r="mob-only" style="display:none;background:rgba(20,20,20,.06);border-radius:999px;padding:3px;margin:-6px 0 12px;">
-          <button onClick="{{ goFamilias }}" style="flex:1 1 0;border:none;background:transparent;border-radius:999px;font-family:inherit;font-weight:700;color:rgba(20,20,20,.6);cursor:pointer;">Hogares</button>
+          <button onClick="{{ goFamilias }}" style="flex:1 1 0;border:none;background:transparent;border-radius:999px;font-family:inherit;font-weight:700;color:rgba(20,20,20,.6);cursor:pointer;">Comunidad</button>
           <button style="flex:1 1 0;border:none;background:#fff;border-radius:999px;font-family:inherit;font-weight:800;color:#141414;box-shadow:0 1px 3px rgba(20,20,20,.12);cursor:default;">Personas</button>
         </div>
         <div data-r="filters" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;align-items:center;">
@@ -2054,15 +2054,15 @@
 
     <!-- ============ FAMILIAS ============ -->
     <sc-if value="{{ isFamilias }}" hint-placeholder-val="{{ false }}">
-      <div data-screen-label="Hogares">
+      <div data-screen-label="Comunidad">
         <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:18px;">
           <div>
-            <h1 data-r="h1" style="margin:0;font-size:24px;font-weight:800;letter-spacing:-0.02em;">Hogares</h1>
+            <h1 data-r="h1" style="margin:0;font-size:24px;font-weight:800;letter-spacing:-0.02em;">Comunidad</h1>
             <div style="font-size:13px;color:rgba(20,20,20,.55);margin-top:4px;">{{ famCount }} hogares · quienes viven bajo el mismo techo</div>
           </div>
         </div>
         <div data-r="mob-only" style="display:none;background:rgba(20,20,20,.06);border-radius:999px;padding:3px;margin:-6px 0 12px;">
-          <button style="flex:1 1 0;border:none;background:#fff;border-radius:999px;font-family:inherit;font-weight:800;color:#141414;box-shadow:0 1px 3px rgba(20,20,20,.12);cursor:default;">Hogares</button>
+          <button style="flex:1 1 0;border:none;background:#fff;border-radius:999px;font-family:inherit;font-weight:800;color:#141414;box-shadow:0 1px 3px rgba(20,20,20,.12);cursor:default;">Comunidad</button>
           <button onClick="{{ goPersonas }}" style="flex:1 1 0;border:none;background:transparent;border-radius:999px;font-family:inherit;font-weight:700;color:rgba(20,20,20,.6);cursor:pointer;">Personas</button>
         </div>
         <div data-r="filters" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;align-items:center;">
@@ -6039,14 +6039,18 @@ class Component extends DCLogic {
     if (!el || !L || !M) return;
     if (this._map && this._map.getContainer() !== el) { this._map.remove(); this._map = null; }
     if (!this._map) { this._map = L.map(el, { zoomControl: true, attributionControl: true }); L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', { maxZoom: 19, attribution: 'Tiles © Esri · © OpenStreetMap' }).addTo(this._map); this._mapLayer = L.layerGroup().addTo(this._map); this._mapKey = ''; }
+    // el contenedor puede cambiar de tamaño o reaparecer sin que cambien los datos: recalcular siempre
+    clearTimeout(this._mapSizeT); this._mapSizeT = setTimeout(() => { if (this._map) this._map.invalidateSize({ pan: false }); }, 60);
     if (this._mapKey === M.key) return; this._mapKey = M.key;
+    this._map.stop();
     this._mapLayer.clearLayers();
     const pts = [];
     if (M.start) { pts.push(M.start); L.marker(M.start, { icon: L.divIcon({ className: '', html: '<div style="width:26px;height:26px;border-radius:8px;background:#141414;color:#fff;font:800 11px Sora,sans-serif;display:flex;align-items:center;justify-content:center;border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.3)">P</div>', iconSize: [26, 26], iconAnchor: [13, 13] }) }).bindTooltip(M.startL || 'Punto de partida').addTo(this._mapLayer); }
     M.pins.forEach(p => { pts.push([p.lat, p.lng]); L.marker([p.lat, p.lng], { icon: L.divIcon({ className: '', html: '<div style="width:26px;height:26px;border-radius:999px;background:' + p.c + ';color:' + (p.fg || '#fff') + ';font:800 11px Sora,sans-serif;display:flex;align-items:center;justify-content:center;border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.3);opacity:' + (p.op || 1) + '">' + (p.n || '') + '</div>', iconSize: [26, 26], iconAnchor: [13, 13] }) }).bindTooltip(p.t).addTo(this._mapLayer); });
     if (M.route && pts.length > 1) L.polyline(pts, { color: '#E81957', weight: 3, opacity: .75, dashArray: '6 6' }).addTo(this._mapLayer);
-    if (pts.length) this._map.fitBounds(L.latLngBounds(pts).pad(0.2), { maxZoom: 16 }); else this._map.setView([26.9869, -102.0653], 14);
-    setTimeout(() => { if (this._map) this._map.invalidateSize(); }, 60);
+    // sin animación: un re-encuadre a media animación de zoom deja el mapa trabado (sobre todo en Safari iOS)
+    this._map.invalidateSize({ pan: false });
+    if (pts.length) this._map.fitBounds(L.latLngBounds(pts).pad(0.2), { maxZoom: 16, animate: false }); else this._map.setView([26.9869, -102.0653], 14, { animate: false });
   }
   // ===== Periodicidad: hogar con embarazo o hijo/a P2040 menor de 7 años → mensual; si el más pequeño tiene 7+ → bimestral =====
   perHogar(ms) {
@@ -6257,7 +6261,7 @@ class Component extends DCLogic {
       ['dashboard', 'Inicio', ['dashboard']],
       ['plan', 'Mi plan', ['plan']],
       ['personas', 'Personas', ['personas', 'persona']],
-      ['familias', 'Hogares', ['familias', 'familia']],
+      ['familias', 'Comunidad', ['familias', 'familia']],
       ['medios', 'Acompañamiento', ['medios']],
       ['pilares', 'Pilares', ['pilares']]
     ].filter(([v]) => !(v === 'pilares' && this.rolActual().id === 'guia')).map(([v, label, views]) => {
@@ -6299,8 +6303,8 @@ class Component extends DCLogic {
       userDotSt: { width: 10, height: 10, borderRadius: 999, flex: 'none', background: this.rolActual().color || '#141414' },
       puedeRegistrar: this.puede('registrar'), puedeEditar: this.puede('fichas_editar'),
 
-      mobTitle: ({ dashboard: 'Inicio', personas: 'Personas', persona: 'Ficha 360°', familias: 'Hogares', familia: 'Hogar', plan: 'Mi plan', medios: 'Acompañamiento', pilares: 'Pilares', perfil: 'Mi perfil' })[S.view] || 'Plan 20·40',
-      mobTabsL: this.mobTabs(S, [['dashboard', 'Inicio', ['dashboard']], ['familias', 'Hogares', ['familias', 'familia', 'personas', 'persona']]]),
+      mobTitle: ({ dashboard: 'Inicio', personas: 'Personas', persona: 'Ficha 360°', familias: 'Comunidad', familia: 'Hogar', plan: 'Mi plan', medios: 'Acompañamiento', pilares: 'Pilares', perfil: 'Mi perfil' })[S.view] || 'Plan 20·40',
+      mobTabsL: this.mobTabs(S, [['dashboard', 'Inicio', ['dashboard']], ['familias', 'Comunidad', ['familias', 'familia', 'personas', 'persona']]]),
       mobTabsR: this.mobTabs(S, [['plan', 'Mi plan', ['plan']], ['medios', 'Acompañar', ['medios']]]),
       mm: { open: !!S.mobMenu, toggle: () => this.setState({ mobMenu: !S.mobMenu }), close: () => this.setState({ mobMenu: false }),
         perfil: () => this.setState({ mobMenu: false, view: 'perfil', pid: null }),
@@ -6690,7 +6694,7 @@ class Component extends DCLogic {
         movCancel: () => this.setState({ planSel: null }), movVer: () => { const fid = S.planSel; this.setState({ planSel: null }); if (fid) openFamilia(fid)(); }, movQuitar: () => moverSel(''),
         sinDrop: e => { e.preventDefault(); moverSel(''); }, sinOver: e => e.preventDefault(),
         hechas: hechas.map(filaMes), hasHechas: hechas.length > 0, nHechas: String(hechas.length),
-        mapRef: el => { this._mapEl = el; if (el) setTimeout(() => this.syncMap(), 0); },
+        mapRef: this._mapRefFn || (this._mapRefFn = el => { this._mapEl = el; if (el) setTimeout(() => this.syncMap(), 0); }),
         reordR: S.planReord ? '' : 'hide-mobile', reordL: S.planReord ? 'Listo' : 'Reordenar', reordTog: () => this.setState({ planReord: !S.planReord }),
         reordSt: { border: S.planReord ? 'none' : '1px solid rgba(20,20,20,.14)', background: S.planReord ? '#141414' : '#fff', color: S.planReord ? '#fff' : '#141414', borderRadius: 999, height: 36, padding: '0 16px', fontFamily: 'inherit', fontSize: 12.5, fontWeight: 700, cursor: 'pointer' },
         mapNota: tabV === 'hoy' ? 'Ruta del día desde ' + OF[2] + ' · el orden se puede cambiar con ↑ ↓ (en celular: «Reordenar»)' : S.planDiaFoco ? 'Solo ' + dLabL(S.planDiaFoco) + ' · toca el mismo día para ver todo' : (S.planWk != null && semanas[S.planWk] ? semanas[S.planWk].t + ' · el número es el día del mes · toca otra semana o la misma para ver todo' : 'El color es la semana (igual que en el calendario) y el número, el día · toca una semana para verla sola'),
