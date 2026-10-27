@@ -28,6 +28,14 @@ El mapa (pin del hogar y «Mapa real» del plan) y el llenado automático de la 
 - **10 indicadores**: acompañamiento último mes, formación, sueño, registro civil, escolaridad, seguro médico, nutrición, vacunas, sacramentos según edad y consagración en 2 años.
 - **Registro**: persona, mamá embarazada y hogar completo (sin apellidos obligatorios; tipo de familia sugerido por las relaciones).
 
+## Novedades (octubre 2026)
+- **Registro de visita** una pregunta por pantalla en celular y 5 pasos visuales en computadora; tema/compromiso/comentario por persona; alerta para varios niños con descripción y archivos; borrador si se salta algo en celular.
+- **Seguimientos** y **Casos** con el mismo formato de registro.
+- **Indicadores de tus niños** en el Inicio: pendientes por indicador y registro rápido (sueño, seguro, cinta MUAC con z-score OMS, sacramentos, consagración, cartilla vigente).
+- **Ficha de visita** del hogar con checklist que se palomea solo, además de la Ficha del hogar.
+- **Acompañamiento**: resumen y edición de registros, borradores y solicitudes de caso en la lista.
+- **Detalle escolar** por grado según la edad.
+
 ## Datos de prueba
 - `data/crm_ficticio.json`: muestra anonimizada hasta junio 2026 (nombres, IDs, hogares y fechas remapeados).
 - `data/muestra-guias.js`: al abrir, completa ~70 hogares por guía con relaciones, ubicación aproximada por colonia e historial de visitas que respeta la periodicidad; luego se simulan acompañamientos hasta hoy.
