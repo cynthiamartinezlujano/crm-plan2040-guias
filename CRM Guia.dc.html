@@ -275,34 +275,40 @@
         <div data-r="mob-only" style="display:none;flex-direction:column;gap:14px;margin-bottom:16px;">
           <sc-if value="{{ hoyP.has }}" hint-placeholder-val="{{ false }}">
             <div style="background:#141414;color:#fff;border-radius:22px;padding:16px;display:flex;flex-direction:column;gap:12px;">
-              <div style="font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#FDB813;">{{ hoyP.nL }}</div>
-              <div><div style="font-size:12px;color:rgba(255,255,255,.65);">Siguiente</div><div style="font-size:18px;font-weight:800;margin-top:2px;">{{ hoyP.nombre }}</div><div style="font-size:12.5px;color:rgba(255,255,255,.72);margin-top:2px;">{{ hoyP.dir }}</div></div>
+              <div style="display:flex;align-items:center;gap:8px;"><img src="assets/spot/clock.png" alt="" style="width:20px;height:20px;object-fit:contain;"><span style="font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#FDB813;">{{ hoyP.nL }}</span></div>
+              <div style="display:flex;align-items:center;gap:12px;">
+                <div style="width:54px;height:54px;border-radius:16px;background:#FDB813;display:flex;align-items:center;justify-content:center;flex:none;"><img src="assets/spot/house.png" alt="" style="width:36px;height:36px;object-fit:contain;"></div>
+                <div style="min-width:0;"><div style="font-size:12px;font-weight:700;color:#FDB813;">Siguiente visita</div><div style="font-size:18px;font-weight:800;margin-top:2px;line-height:1.2;">{{ hoyP.nombre }}</div><div style="display:flex;align-items:center;gap:5px;font-size:12.5px;color:rgba(255,255,255,.72);margin-top:3px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path><circle cx="12" cy="10" r="3"></circle></svg><span style="min-width:0;">{{ hoyP.dir }}</span></div></div>
+              </div>
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-                <button onClick="{{ hoyP.ruta }}" style="height:46px;border-radius:999px;border:none;background:#fff;color:#141414;font-family:inherit;font-size:13.5px;font-weight:700;cursor:pointer;">Ver ruta</button>
-                <button onClick="{{ hoyP.iniciar }}" style="height:46px;border-radius:999px;border:none;background:#E81957;color:#fff;font-family:inherit;font-size:13.5px;font-weight:800;cursor:pointer;">Registrar visita</button>
+                <button onClick="{{ hoyP.ruta }}" style="height:46px;border-radius:999px;border:none;background:#fff;color:#141414;font-family:inherit;font-size:13.5px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:7px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6l6-3 6 3 6-3v15l-6 3-6-3-6 3z"></path><path d="M9 3v15M15 6v15"></path></svg>Ver ruta</button>
+                <button onClick="{{ hoyP.iniciar }}" style="height:46px;border-radius:999px;border:none;background:#E81957;color:#fff;font-family:inherit;font-size:13.5px;font-weight:800;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:7px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg>Registrar visita</button>
               </div>
             </div>
           </sc-if>
           <sc-if value="{{ hoyP.none }}" hint-placeholder-val="{{ true }}">
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-            <button onClick="{{ md.plan }}" style="height:48px;border-radius:999px;border:1.5px solid rgba(20,20,20,.12);background:#fff;font-family:inherit;font-size:14px;font-weight:700;color:#141414;cursor:pointer;">Mi plan de hoy</button>
+            <button onClick="{{ md.plan }}" style="height:48px;border-radius:999px;border:1.5px solid rgba(20,20,20,.12);background:#fff;font-family:inherit;font-size:14px;font-weight:700;color:#141414;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;"><img src="assets/spot/house.png" alt="" style="width:22px;height:22px;object-fit:contain;">Mi plan de hoy</button>
             <sc-if value="{{ puedeRegistrar }}" hint-placeholder-val="{{ true }}"><button onClick="{{ openRegBlank }}" style="width:100%;height:48px;border-radius:999px;border:none;background:#E81957;color:#fff;font-family:inherit;font-size:14px;font-weight:800;cursor:pointer;">Registrar</button></sc-if>
           </div>
           </sc-if>
           <div style="background:#fff;border-radius:20px;box-shadow:0 0 0 1px rgba(20,20,20,.07);padding:16px;display:flex;flex-direction:column;gap:12px;">
-            <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;"><span style="font-size:14px;font-weight:800;">Cobertura de {{ md.mesL }}</span><button onClick="{{ md.toggle }}" style="border:none;background:none;padding:0;min-height:32px;font-family:inherit;font-size:12px;font-weight:700;color:#E81957;cursor:pointer;">{{ md.indL }}</button></div>
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;"><span style="display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:800;"><img src="assets/spot/stars.png" alt="" style="width:22px;height:22px;object-fit:contain;">Cobertura de {{ md.mesL }}</span><button onClick="{{ md.toggle }}" style="border:none;background:none;padding:0;min-height:32px;font-family:inherit;font-size:12px;font-weight:700;color:#E81957;cursor:pointer;">{{ md.indL }}</button></div>
             <sc-for list="{{ md.cob }}" as="mc" hint-placeholder-count="3">
-              <div style="display:flex;flex-direction:column;gap:5px;">
-                <div style="display:flex;justify-content:space-between;gap:10px;font-size:12.5px;"><span style="min-width:0;">{{ mc.l }}</span><b style="white-space:nowrap;">{{ mc.v }}</b></div>
-                <div style="height:7px;border-radius:999px;background:rgba(20,20,20,.07);overflow:hidden;"><div style="{{ mc.barSt }}"></div></div>
+              <div style="display:flex;align-items:center;gap:10px;">
+                <div style="{{ mc.icSt }}"><img src="{{ mc.ic }}" alt="" style="width:24px;height:24px;object-fit:contain;"></div>
+                <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:5px;">
+                  <div style="display:flex;justify-content:space-between;gap:10px;font-size:12.5px;"><span style="min-width:0;">{{ mc.l }}</span><b style="white-space:nowrap;">{{ mc.v }}</b></div>
+                  <div style="height:7px;border-radius:999px;background:rgba(20,20,20,.07);overflow:hidden;"><div style="{{ mc.barSt }}"></div></div>
+                </div>
               </div>
             </sc-for>
           </div>
           <div style="display:flex;flex-direction:column;gap:8px;">
-            <div style="font-size:14px;font-weight:800;">Por atender</div>
+            <div style="display:flex;align-items:center;gap:8px;font-size:14px;font-weight:800;"><img src="assets/spot/megaphone.png" alt="" style="width:22px;height:22px;object-fit:contain;">Por atender</div>
             <div style="background:#fff;border-radius:20px;box-shadow:0 0 0 1px rgba(20,20,20,.07);overflow:hidden;">
               <sc-for list="{{ md.pend }}" as="mp" hint-placeholder-count="3">
-                <button onClick="{{ mp.go }}" style="display:flex;align-items:center;gap:12px;width:100%;height:54px;padding:0 14px;border:none;border-bottom:1px solid rgba(20,20,20,.06);background:#fff;font-family:inherit;text-align:left;cursor:pointer;color:#141414;"><span style="{{ mp.nSt }}">{{ mp.n }}</span><span style="flex:1;min-width:0;font-size:13.5px;font-weight:600;">{{ mp.t }}</span><span style="color:rgba(20,20,20,.35);font-size:16px;">›</span></button>
+                <button onClick="{{ mp.go }}" style="display:flex;align-items:center;gap:12px;width:100%;height:58px;padding:0 14px;border:none;border-bottom:1px solid rgba(20,20,20,.06);background:#fff;font-family:inherit;text-align:left;cursor:pointer;color:#141414;"><span style="{{ mp.icSt }}"><img src="{{ mp.ic }}" alt="" style="width:22px;height:22px;object-fit:contain;"></span><span style="flex:1;min-width:0;font-size:13.5px;font-weight:600;">{{ mp.t }}</span><span style="{{ mp.nSt }}">{{ mp.n }}</span><span style="color:rgba(20,20,20,.35);font-size:16px;">›</span></button>
               </sc-for>
             </div>
           </div>
@@ -6974,9 +6980,9 @@ class Component extends DCLogic {
         const toPer = f => () => { this.fltClear && this.fltClear(); this.setState(Object.assign({ view: 'personas' }, f)); };
         if (!base.hoyP) base.hoyP = { none: true, has: false };
         base.md = { mesL: base.vis ? base.vis.mesL : 'este mes', plan: () => this.setState({ view: 'plan', planTab: 'hoy' }),
-          pend: [['Les falta visita este mes', nSin, ['#FFF6DE', '#A87400'], { fSinVisita: 'sin' }], ['Solicitudes de caso', nSol, ['rgba(232,25,87,.1)', '#C40E45'], { fSol: 'si' }], ['Borradores sin enviar', nBor, ['rgba(20,20,20,.06)', 'rgba(20,20,20,.7)'], { fBorrador: 'si' }]]
-            .map(([t, n, c, f]) => ({ t, n: String(n), nSt: nst(c[0], c[1]), go: toPer(f) })),
-          cob: base.dStatsPob.filter(s => s.hasRing && s.pctN).slice(0, 3).map(s => ({ l: s.l, v: s.pctN, cap: s.v + ' · ' + s.cap, barSt: s.barSt })),
+          pend: [['Les falta visita este mes', nSin, ['#FFF6DE', '#A87400'], { fSinVisita: 'sin' }, 'house'], ['Solicitudes de caso', nSol, ['rgba(232,25,87,.1)', '#C40E45'], { fSol: 'si' }, 'first-aid'], ['Borradores sin enviar', nBor, ['rgba(20,20,20,.06)', 'rgba(20,20,20,.7)'], { fBorrador: 'si' }, 'document']]
+            .map(([t, n, c, f, ic]) => ({ t, n: String(n), nSt: nst(c[0], c[1]), go: toPer(f), ic: 'assets/spot/' + ic + '.png', icSt: { width: 36, height: 36, borderRadius: 12, background: c[0], display: 'inline-flex', alignItems: 'center', justifyContent: 'center', flex: 'none' } })),
+          cob: base.dStatsPob.filter(s => s.hasRing && s.pctN).slice(0, 3).map((s, i) => ({ l: s.l, v: s.pctN, cap: s.v + ' · ' + s.cap, barSt: s.barSt, ic: 'assets/spot/' + (/embara/i.test(s.l) ? 'heart-pulse' : /famil|hogar/i.test(s.l) ? 'family' : ['house', 'family', 'heart-pulse'][i]) + '.png', icSt: { width: 38, height: 38, borderRadius: 12, background: ['#FFF6DE', 'rgba(232,25,87,.08)', 'rgba(124,187,239,.18)'][i], display: 'flex', alignItems: 'center', justifyContent: 'center', flex: 'none' } })),
           restR: S.mobDashFull ? '' : 'hide-mobile', indL: S.mobDashFull ? 'Ocultar tablero' : 'Ver tablero ›', toggleL: S.mobDashFull ? 'Ocultar tablero completo' : 'Ver tablero completo', toggle: () => this.setState({ mobDashFull: !S.mobDashFull }) };
       }
       const cc = dp.filter(p => p.comunidad === 'CC').length, ci = dp.filter(p => p.comunidad === 'CI').length;
